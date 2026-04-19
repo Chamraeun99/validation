@@ -22,7 +22,8 @@ RUN composer install \
     --prefer-dist \
     --optimize-autoloader \
     --no-scripts \
-    --no-plugins
+    --no-plugins \
+    --ignore-platform-req=ext-intl
 
 # ── Stage 3: Runtime image ────────────────────────────────────────────────────
 FROM php:8.4-cli-alpine
