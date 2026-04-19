@@ -54,10 +54,9 @@ COPY . .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=assets /app/public/build ./public/build
 
-# Remove Composer's runtime PHP version check — the Dockerfile already guarantees
-# the correct PHP version, so this file is redundant and causes deploy failures
-# when Render serves a cached container layer.
-RUN rm -f vendor/composer/platform_check.php
+# Replace platform_check.php with a no-op so autoload_real.php can still require it
+# (deleting it causes a fatal error; overwriting it with empty PHP skips the version gate)
+RUN echo '<?php' > vendor/composer/platform_check.php
 
 # Prepare writable directories
 RUN mkdir -p \
