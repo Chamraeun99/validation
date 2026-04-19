@@ -25,7 +25,7 @@ RUN composer install \
     --no-plugins
 
 # ── Stage 3: Runtime image ────────────────────────────────────────────────────
-FROM php:8.3-cli-alpine
+FROM php:8.4-cli-alpine
 WORKDIR /var/www/html
 
 # Install system deps + PHP extensions
