@@ -13,6 +13,8 @@ RUN npm run build
 # ── Stage 2: Install PHP dependencies ────────────────────────────────────────
 FROM composer:2 AS vendor
 WORKDIR /app
+# Install intl (required by filament/support) into the composer image
+RUN apk add --no-cache icu-dev && docker-php-ext-install intl
 COPY composer.json composer.lock ./
 # --no-scripts avoids running Laravel post-install scripts that need the full app
 RUN composer install \
@@ -22,8 +24,7 @@ RUN composer install \
     --prefer-dist \
     --optimize-autoloader \
     --no-scripts \
-    --no-plugins \
-    --ignore-platform-req=ext-intl
+    --no-plugins
 
 # ── Stage 3: Runtime image ────────────────────────────────────────────────────
 FROM php:8.4-cli-alpine
