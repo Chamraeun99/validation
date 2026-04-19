@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+# Publish Filament assets
+php artisan filament:assets --no-interaction
+
 # Cache config, routes, and views for production performance
 php artisan config:cache
 php artisan route:cache
