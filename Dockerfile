@@ -54,10 +54,6 @@ COPY . .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=assets /app/public/build ./public/build
 
-# Replace platform_check.php with a no-op so autoload_real.php can still require it
-# (deleting it causes a fatal error; overwriting it with empty PHP skips the version gate)
-RUN echo '<?php' > vendor/composer/platform_check.php
-
 # Prepare writable directories
 RUN mkdir -p \
     storage/framework/cache \
